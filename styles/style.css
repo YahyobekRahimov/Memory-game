@@ -486,7 +486,8 @@ img {
   height: 150px;
 }
 .cards-columns-8 .card img {
-  width: 120px;
+  width: max-content;
+  max-width: 130px;
   max-height: 120px;
 }
 

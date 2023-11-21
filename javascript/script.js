@@ -31,6 +31,24 @@ const startGameButton = document.querySelector('.start-button');
 const difficultyLevel = document.getElementById('difficulty-level');
 const attempts = document.querySelector('.attempts');
 
+const restartGameButton = document.querySelector('.restart-button');
+
+restartGameButton.addEventListener('click', function() {
+    if (!document.querySelector('.card')) {
+        alert('You must start the game first')
+        return;
+    }
+    let youSure = confirm('Your progress will be reset. Are you sure you want to restart the game?');
+    if (youSure) {
+        gameDifficulty = parseInt(difficultyLevel.value);
+        score = 0;
+        numberOfAttempts = 0;
+        cardID = 0;
+        attempts.innerHTML = numberOfAttempts;
+        displayCards(pictures, gameDifficulty);
+    }
+})
+
 startGameButton.addEventListener('click', function() {
     gameDifficulty = parseInt(difficultyLevel.value);
     score = 0;
