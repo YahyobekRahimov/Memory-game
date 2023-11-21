@@ -5,22 +5,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./styles/style.css">
-    <title>Document</title>
+    <title>Memory game</title>
 </head>
 
 <body>
     <main>
         <section class="top">
             <div class="container top__container">
-                <!-- Start the game;
-                Restart the game
-                Cards
-                Score display
-                history
-                Reset button to start a new game
-                Timer   -->
                 <div class="buttons-group">
                     <button class="start-button button">Start the game</button>
+                    <select name="difficulty" id="difficulty-level">
+                        <option value="0">Easy</option>
+                        <option value="1">Medium</option>
+                        <option value="2">Hard</option>
+                    </select>
+                    <div class="attempts">0</div>
                     <button class="restart-button button">Restart the game</button>
                     <button class="history-button button">History</button>
                 </div>

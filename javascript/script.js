@@ -22,15 +22,26 @@ const pictures = [
 
 ]
 
-let score = 0;
-let numberOfAttempts = 0;
+let score;
+let numberOfAttempts;
+let cardID;
 let maxScore;
-let cardID = 0;
+
+const startGameButton = document.querySelector('.start-button');
+const difficultyLevel = document.getElementById('difficulty-level');
+const attempts = document.querySelector('.attempts');
+
+startGameButton.addEventListener('click', function() {
+    gameDifficulty = parseInt(difficultyLevel.value);
+    score = 0;
+    numberOfAttempts = 0;
+    cardID = 0;
+    attempts.innerHTML = numberOfAttempts;
+    displayCards(pictures, gameDifficulty);
+})
 
 const cards = document.querySelector('.cards');
 let chosenPair = [];
-
-displayCards(pictures, 1);
 
 function cardsEventListener(event) {
     if (!(event.target.classList[0] == 'card')) {
@@ -45,6 +56,8 @@ function cardsEventListener(event) {
     clickedCard.style.border = '3px solid orange';
     chosenPair.push(clickedCard);
     if (chosenPair.length == 2) {
+        numberOfAttempts++;
+        attempts.innerHTML = numberOfAttempts;
         cards.removeEventListener('click', cardsEventListener);
         flipCard(chosenPair[0], chosenPair[1]);
         setTimeout(function() {
@@ -102,12 +115,25 @@ function handleGridSizing(cardCount) {
         cards.classList.toggle('cards-columns-6');
     } else if (cardCount > 9 && cardCount <= 12) {
         cards.classList.toggle('cards-columns-8');
-        console.log('this is working');
     } else {
         cards.classList.toggle('cards-columns-10');
     }
 }
 
+function shuffleArray(arr) {
+    let shuffledArray = [];
+    let usedIndexes = [];
+    let i = 0;
+    while (i < arr.length) {
+        let randomNumber = Math.floor(Math.random() * arr.length);
+        if (!usedIndexes.includes(randomNumber)) {
+            shuffledArray.push(arr[randomNumber]);
+            usedIndexes.push(randomNumber);
+            i++;
+        }
+    }
+    return shuffledArray;
+}
 
 function displayCards(pictures, gameDifficulty) {
     let cardCount;
@@ -122,38 +148,30 @@ function displayCards(pictures, gameDifficulty) {
         maxScore = 4;
     }
     handleGridSizing(cardCount);
-    const neededPictures = getRandomElements(pictures, cardCount);
-    let picturesCopy = [...neededPictures];
+    let neededPictures = getRandomElements(pictures, cardCount);
     let i = 0;
-    let j = picturesCopy.length - 1;
-    let fakeDom = '';
-    while( i < neededPictures.length || j >= 0) {
-        let randomInt = getRandomInt(0, 10);
-        let pictureSrc;
-        let index;
-        if (randomInt % 2 === 1) {
-            if (!neededPictures[i]) {
-                continue;
-            }
-            pictureSrc = neededPictures[i];
-            index = i;
-            i++;
-        } else {
-            if (!picturesCopy[j]) {
-                continue;
-            }
-            pictureSrc = picturesCopy[j];
-            index = j;
-            j--;
-        }
-        const card = `
-        <div class="card pair_${index + 1}" id='${cardID}'>
-            <img src="${pictureSrc}" alt="">
+    let cards = [];
+    let cardID = 0;
+    let index = 0;
+    while (i < neededPictures.length) {
+        let card = `
+        <div class="card pair_${index}" id='${cardID++}'>
+            <img src="${neededPictures[i]}" alt="">
         </div>`;
-        fakeDom += card;
-        cardID++; 
+        cards.push(card);
+        card = `
+        <div class="card pair_${index++}" id='${cardID++}'>
+            <img src="${neededPictures[i]}" alt="">
+        </div>`;
+        cards.push(card);
+        i++;
     }
-    document.querySelector('.cards').innerHTML = fakeDom;
+    cards = shuffleArray(cards);
+    let cardsStr = '';
+    cards.forEach(element => {
+        cardsStr += element;
+    });
+    document.querySelector('.cards').innerHTML = cardsStr;
 }   
 
 

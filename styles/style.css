@@ -451,7 +451,7 @@ body {
 .card {
   width: 180px;
   height: 160px;
-  background-color: rgb(126, 193, 126);
+  background-color: lightcyan;
   box-shadow: rgba(0, 0, 0, 0.7) 0px 10px 50px;
   transition: all 0.6s;
   display: flex;
@@ -498,8 +498,19 @@ img {
   height: 130px;
 }
 .cards-columns-10 .card img {
-  width: 100px;
+  max-width: 100px;
   max-height: 120px;
+}
+
+#difficulty-level {
+  font-size: 40px;
+  padding: 5px 10px;
+  background-color: lightcyan;
+  border-radius: 15px;
+}
+
+.attempts {
+  font-size: 50px;
 }
 
 /*# sourceMappingURL=style.css.map */
